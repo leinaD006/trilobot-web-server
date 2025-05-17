@@ -1,0 +1,11 @@
+<?php
+
+$command = 'ls';
+exec($command, $out, $status);
+
+print_r($out);
+
+$command2 = '/usr/bin/python /var/www/html/trilobot/var/www/html/trilobot/make_noise.py
+make_noise.py';
+exec($command2, $out, $status);
+?>

@@ -1,0 +1,15 @@
+<?php
+
+echo "Before Calling Python File.";
+echo "<br>";
+
+$data = "I'm from PHP file.";
+
+$output = shell_exec("python test.py"  .$data);
+
+echo "Output from python file is: " . $output;
+echo "<br>";
+
+echo "After Calling Python File.";
+
+?>
