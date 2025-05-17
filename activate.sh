@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Activate the Python virtual environment
+echo "Activating the Python virtual environment..."
 # Check if the virtual environment directory exists
 if [ ! -d "env" ]; then
     echo "Error: Virtual environment directory 'env' not found. Please run the install script first."

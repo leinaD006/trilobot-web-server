@@ -3,8 +3,10 @@
 # Main install script
 
 # Set the install directory relative to this script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-INSTALL_DIR="$SCRIPT_DIR/install"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export SCRIPT_DIR
+export INSTALL_DIR="$SCRIPT_DIR/install"
+export EXAMPLE_DIR="$SCRIPT_DIR/examples"
 
 # Function to display usage information
 show_usage() {
