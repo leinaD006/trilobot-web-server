@@ -18,7 +18,7 @@ sudo systemctl start apache2
 
 sudo apt install phpmyadmin -y
 
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$MARIA_DB_ROOT_PASSWORD';"
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIA_DB_ROOT_PASSWORD';"
 
 sudo echo 'Include /etc/phpmyadmin/apache.conf' >> /etc/apache2/apache2.conf
 
