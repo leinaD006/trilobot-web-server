@@ -14,7 +14,7 @@
     ```bash
     ./install.sh
     ```
-4. Enter sudo password if prompted.
+4. Enter sudo password whenever prompted.
 
 5. When the PHPMyAdmin config screen appears, hit space to select "apache2" (asterisk will appear), them hit tab (or use arrow keys) to select "OK" and hit enter. On the next screen, hit enter to select "yes". When it asks for a password, leave it blank and hit enter. The script will set the password automatically.
 
