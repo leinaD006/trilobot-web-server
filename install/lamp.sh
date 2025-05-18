@@ -20,14 +20,6 @@ sudo apt install phpmyadmin -y
 
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIA_DB_ROOT_PASSWORD';"
 
-sudo echo 'Include /etc/phpmyadmin/apache.conf' >> /etc/apache2/apache2.conf
-
-# Set up MariaDB
-# sudo mysql -e "CREATE USER 'root' IDENTIFIED BY 'password';"
-# sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '$MARIA_DB_ROOT_PASSWORD';"
-
-# sudo echo 'Include /etc/phpmyadmin/apache.conf' >> /etc/apache2/apache2.conf
-
 sudo echo "<?php phpinfo(); ?>" > /var/www/html/info.php
 
 sudo systemctl restart apache2
