@@ -3,7 +3,7 @@
 # Symlink the web files to the web directory
 # Check if the web directory exists
 if [ ! -d "$WEB_DIR" ]; then
-    mkdir -p "$WEB_DIR"
+    sudo mkdir -p "$WEB_DIR"
 fi
 
 # Symlink the web files
