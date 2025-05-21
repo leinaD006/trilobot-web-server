@@ -7,9 +7,9 @@ if [ ! -d "$WEB_DIR" ]; then
 fi
 
 # Symlink the web files
-ln -s "$HTML_DIR" "$WEB_DIR/html"
+sudo ln -s "$HTML_DIR" "$WEB_DIR/html"
 
 # Symlink the Python files
-ln -s "$PYTHON_DIR" "$WEB_DIR/python"
+sudo ln -s "$PYTHON_DIR" "$WEB_DIR/python"
 
 echo "Symlinks created successfully in $WEB_DIR"
