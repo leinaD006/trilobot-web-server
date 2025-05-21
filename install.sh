@@ -6,7 +6,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export SCRIPT_DIR
 export INSTALL_DIR="$SCRIPT_DIR/install"
-export EXAMPLE_DIR="$SCRIPT_DIR/examples"
+export EXAMPLE_DIR="$SCRIPT_DIR/python/examples"
 
 # Function to display usage information
 show_usage() {
