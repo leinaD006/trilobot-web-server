@@ -9,7 +9,7 @@ export INSTALL_DIR="$SCRIPT_DIR/install"
 export EXAMPLE_DIR="$SCRIPT_DIR/python/examples"
 export HTML_DIR="$SCRIPT_DIR/html"
 export PYTHON_DIR="$SCRIPT_DIR/python"
-export WEB_DIR="/var/www
+export WEB_DIR="/var/www"
 
 # Function to display usage information
 show_usage() {
