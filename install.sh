@@ -11,6 +11,13 @@ export WEB_DIR="$SCRIPT_DIR/web"
 export PYTHON_DIR="$SCRIPT_DIR/python"
 export WEB_ROOT="/var/www"
 
+# Color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 failed_scripts=()
 successful_scripts=()
 # Function to display usage information
@@ -40,7 +47,7 @@ fi
 
 # Check if install directory exists
 if [ ! -d "$INSTALL_DIR" ]; then
-    echo "Error: Install directory not found at $INSTALL_DIR"
+    echo "${RED}Error: Install directory not found at $INSTALL_DIR${NC}"
     exit 1
 fi
 
@@ -52,17 +59,17 @@ run_script() {
     if [ -f "$script" ]; then
         echo "Running install script: $script_key"
         if bash "$script"; then
-            echo "✓ Script $script_key completed successfully"
+            echo "${GREEN}✓ Script $script_key completed successfully${NC}"
             successful_scripts+=("$script_key")
             return 0
         else
             local status=$?
-            echo "✗ Script $script_key failed with exit code $status"
+            echo "${RED}✗ Script $script_key failed with exit code $status${NC}"
             failed_scripts+=("$script_key")
             return 1
         fi
     else
-        echo "✗ Install script $script_key not found"
+        echo "${RED}✗ Install script $script_key not found${NC}"
         failed_scripts+=("$script_key (not found)")
         return 1
     fi
@@ -76,17 +83,17 @@ show_summary() {
     echo "======================================="
     
     if [ ${#successful_scripts[@]} -gt 0 ]; then
-        echo "✓ Successful scripts (${#successful_scripts[@]}):"
+        echo "${GREEN}✓ Successful scripts (${#successful_scripts[@]}):"
         for script in "${successful_scripts[@]}"; do
-            echo "  - $script"
+            echo "  - $script${NC}"
         done
     fi
     
     if [ ${#failed_scripts[@]} -gt 0 ]; then
         echo ""
-        echo "✗ Failed scripts (${#failed_scripts[@]}):"
+        echo "${RED}✗ Failed scripts (${#failed_scripts[@]}):"
         for script in "${failed_scripts[@]}"; do
-            echo "  - $script"
+            echo "  - $script${NC}"
         done
         echo ""
         echo "Please check the output above for specific error details."
@@ -106,18 +113,18 @@ if [ $# -eq 0 ]; then
     
     # Check if any scripts exist
     if [ -z "$scripts" ]; then
-        echo "No install scripts found in $INSTALL_DIR"
+        echo "${RED}No install scripts found in $INSTALL_DIR${NC}"
         exit 1
     fi
 
     # Run preinstall.sh first
     if [ -f "$INSTALL_DIR/preinstall.sh" ]; then
         if ! run_script "$INSTALL_DIR/preinstall.sh"; then
-            echo "Pre-install script failed. Exiting."
+            echo "${RED}Pre-install script failed. Exiting.${NC}"
             exit 1
         fi
     else
-        echo "Warning: Pre-install script not found"
+        echo "${RED}Error: Pre-install script not found${NC}"
         exit 1
     fi
     
@@ -151,9 +158,9 @@ show_summary
 
 # Exit with appropriate code
 if [ ${#failed_scripts[@]} -gt 0 ]; then
-    echo "Installation completed with ${#failed_scripts[@]} failure(s)."
+    echo "${RED}Installation completed with ${#failed_scripts[@]} failure(s).${NC}"
     exit 1
 else
-    echo "Installation completed successfully!"
+    echo "${GREEN}Installation completed successfully!${NC}"
     exit 0
 fi
