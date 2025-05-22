@@ -18,9 +18,8 @@ function flashUnderlights()
 }
 
 # Button to trigger the flashUnderlights function
-if (isset($_POST['flash_underlights'])) {
-    $output = flashUnderlights();
-    echo "<pre>$output</pre>";
+if ($_POST['flash_underlights']) {
+    return flashUnderlights();
 }
 ?>
 
@@ -65,21 +64,17 @@ if (isset($_POST['flash_underlights'])) {
 <body>
     <div class="container">
         <h1 class="text-center">Trilobot Control</h1>
-        <form method="POST" action="">
-            <div class="text-center">
-                <button type="submit" name="flash_underlights" class="btn btn-custom">Flash Underlights</button>
-            </div>
-        </form>
-        <?php if (isset($output)): ?>
-            <div class="output">
-                <h5>Output:</h5>
-                <pre><?php echo htmlspecialchars($output); ?></pre>
-            </div>
-        <?php endif; ?>
+        <div class="text-center">
+            <button id="flash-underlights">Flash Underlights</button>
+        </div>
+        <div class="output">
+        </div>
     </div>
     <script>
-        $(document).ready(function () {
-            // Add any custom JavaScript here
+        $('#flash-underlights').click(function () {
+            $.post('', { flash_underlights: true }, function (data) {
+                $('.output').html(data);
+            });
         });
     </script>
 </body>
