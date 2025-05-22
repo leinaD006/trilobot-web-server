@@ -87,6 +87,9 @@ if [ $# -eq 0 ]; then
         key=$(basename "$script" .sh)
         run_script "$key" || failed=1
     done
+
+    # Run deploy.sh last
+    bash "$SCRIPT_DIR/deploy.sh" || failed=1
     
     if [ $failed -eq 1 ]; then
         echo "One or more install scripts failed"
