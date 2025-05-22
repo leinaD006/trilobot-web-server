@@ -23,8 +23,8 @@ fi
 log_message "Deploying files to web server..."
 
 # Sync files
-rsync -av "$SCRIPT_DIR/web" "$WEB_ROOT/html" 2>&1 | tee -a "$LOG_FILE"
-rsync -av "$SCRIPT_DIR/python" "$WEB_ROOT/python" 2>&1 | tee -a "$LOG_FILE"
+rsync -av "$SCRIPT_DIR/web/" "$WEB_ROOT/html/" 2>&1 | tee -a "$LOG_FILE"
+rsync -av "$SCRIPT_DIR/python/" "$WEB_ROOT/python/" 2>&1 | tee -a "$LOG_FILE"
 
 # Check rsync result
 if [ ${PIPESTATUS[0]} -eq 0 ]; then
