@@ -128,17 +128,13 @@ if [ $# -eq 0 ]; then
             continue
         fi
         
-        run_script "$key"
+        run_script "$script"
         echo "" # Add spacing between scripts
     done
 
     # Run deploy.sh last
-    run_script "$SCRIPT_DIR/deploy.sh" || failed=1
+    run_script "$SCRIPT_DIR/deploy.sh"
     
-    if [ $failed -eq 1 ]; then
-        echo "One or more install scripts failed"
-        exit 1
-    fi
 else
     # Specific scripts requested
     echo "Running specified install scripts..."
