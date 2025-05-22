@@ -7,7 +7,8 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export SCRIPT_DIR
 export INSTALL_DIR="$SCRIPT_DIR/install"
 export PYTHON_DIR="$SCRIPT_DIR/python"
-export EXAMPLE_DIR="$PYTHON_DIR/examples"
+export PYTHON_SCRIPT_DIR="$PYTHON_DIR/scripts"
+export EXAMPLE_DIR="$PYTHON_SCRIPT_DIR/examples"
 export WEB_DIR="$SCRIPT_DIR/web"
 export WEB_ROOT="/var/www"
 
