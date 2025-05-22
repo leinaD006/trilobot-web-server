@@ -112,7 +112,7 @@ if [ $# -eq 0 ]; then
 
     # Run preinstall.sh first
     if [ -f "$INSTALL_DIR/preinstall.sh" ]; then
-        if !run_script "$INSTALL_DIR/preinstall.sh"; then
+        if ! run_script "$INSTALL_DIR/preinstall.sh"; then
             echo "Pre-install script failed. Exiting."
             exit 1
         fi
