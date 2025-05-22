@@ -95,11 +95,11 @@ show_summary() {
         for script in "${failed_scripts[@]}"; do
             echo -e "  - $script"
         done
-        echo -e "${NC}"
+        echo -e ""
         echo -e "Please check the output above for specific error details."
     fi
     
-    echo -e "======================================="
+    echo -e "${NC}======================================="
 }
 
 # Run scripts based on arguments
