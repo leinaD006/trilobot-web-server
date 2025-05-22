@@ -1,7 +1,7 @@
 <?php
 
-$python = "/var/www/html/python/venv/bin/python";
-$script_path = "/var/www/html/python/scripts";
+$python = "/var/www/python/venv/bin/python";
+$script_path = "/var/www/python/scripts";
 
 echo "$python $script_path/examples/flash_underlights.py\n";
 
