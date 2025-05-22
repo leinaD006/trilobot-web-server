@@ -148,7 +148,7 @@ else
     echo -e ""
     
     for key in "$@"; do
-        run_script "$key"
+        run_script "$INSTALL_DIR/$key.sh"
         echo -e "" # Add spacing between scripts
     done
 fi
