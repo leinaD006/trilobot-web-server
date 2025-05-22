@@ -2,6 +2,9 @@
 
 # Sets up basic requirements for install scripts to be atomic
 
+sudo apt update
+sudo apt upgrade -y
+
 # Add web document roots
 if [ ! -d "/var/www/html" ]; then
     sudo mkdir -p /var/www/html
