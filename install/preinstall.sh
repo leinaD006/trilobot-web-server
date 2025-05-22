@@ -27,7 +27,7 @@ else
 fi
 
 # Install python3-venv
-if ! command -v python3 &> /dev/null
+if ! command -v python3-venv &> /dev/null
 then
     echo "python3-venv could not be found, installing..."
     sudo apt-get install python3-venv -y
