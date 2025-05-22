@@ -85,7 +85,7 @@ show_summary() {
     if [ ${#successful_scripts[@]} -gt 0 ]; then
         echo -e "${GREEN}✓ Successful scripts (${#successful_scripts[@]}):"
         for script in "${successful_scripts[@]}"; do
-            echo -e "  - $script${NC}"
+            echo -e "  - $script"
         done
     fi
     
@@ -93,9 +93,9 @@ show_summary() {
         echo -e ""
         echo -e "${RED}✗ Failed scripts (${#failed_scripts[@]}):"
         for script in "${failed_scripts[@]}"; do
-            echo -e "  - $script${NC}"
+            echo -e "  - $script"
         done
-        echo -e ""
+        echo -e "${NC}"
         echo -e "Please check the output above for specific error details."
     fi
     
