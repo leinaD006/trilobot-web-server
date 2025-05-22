@@ -16,6 +16,9 @@ sudo systemctl start apache2
 sudo apt install phpmyadmin -y
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIA_DB_ROOT_PASSWORD';"
 
+# Remove default index.html
+sudo rm /var/www/html/index.html
+
 # Final restart
 sudo systemctl restart apache2
 
