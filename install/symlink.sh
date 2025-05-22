@@ -2,14 +2,14 @@
 
 # Symlink the web files to the web directory
 # Check if the web directory exists
-if [ ! -d "$WEB_DIR" ]; then
-    sudo mkdir -p "$WEB_DIR"
+if [ ! -d "$WEB_ROOT" ]; then
+    sudo mkdir -p "$WEB_ROOT"
 fi
 
 # Symlink the web files
-sudo ln -s "$HTML_DIR" "$WEB_DIR/html"
+sudo ln -s "$WEB_DIR" "$WEB_ROOT/html"
 
 # Symlink the Python files
-sudo ln -s "$PYTHON_DIR" "$WEB_DIR/python"
+sudo ln -s "$PYTHON_DIR" "$WEB_ROOT/python"
 
-echo "Symlinks created successfully in $WEB_DIR"
+echo "Symlinks created successfully in $WEB_ROOT"

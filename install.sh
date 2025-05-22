@@ -7,9 +7,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export SCRIPT_DIR
 export INSTALL_DIR="$SCRIPT_DIR/install"
 export EXAMPLE_DIR="$SCRIPT_DIR/python/examples"
-export HTML_DIR="$SCRIPT_DIR/html"
+export WEB_DIR="$SCRIPT_DIR/web"
 export PYTHON_DIR="$SCRIPT_DIR/python"
-export WEB_DIR="/var/www"
+export WEB_ROOT="/var/www"
 
 # Function to display usage information
 show_usage() {
@@ -70,9 +70,20 @@ if [ $# -eq 0 ]; then
     
     # Track if any script fails
     failed=0
+
+    # Run preinstall.sh first
+    if [ -f "$INSTALL_DIR/preinstall.sh" ]; then
+        run_script "preinstall" || failed=1
+    else
+        echo "Warning: Pre-install script not found"
+    fi
     
     # Run each script
     for script in $scripts; do
+        # Skip preinstall.sh as it's already run
+        if [[ "$script" == *"/preinstall.sh" ]]; then
+            continue
+        fi
         key=$(basename "$script" .sh)
         run_script "$key" || failed=1
     done
