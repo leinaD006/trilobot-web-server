@@ -6,9 +6,9 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export SCRIPT_DIR
 export INSTALL_DIR="$SCRIPT_DIR/install"
-export EXAMPLE_DIR="$SCRIPT_DIR/python/examples"
-export WEB_DIR="$SCRIPT_DIR/web"
 export PYTHON_DIR="$SCRIPT_DIR/python"
+export EXAMPLE_DIR="$PYTHON_DIR/examples"
+export WEB_DIR="$SCRIPT_DIR/web"
 export WEB_ROOT="/var/www"
 
 # Color codes
