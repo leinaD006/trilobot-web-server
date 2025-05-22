@@ -16,21 +16,20 @@ if [ ! -d "/var/www/python" ]; then
     sudo chown -R $USER:$USER /var/www/python
     sudo chmod -R 0755 /var/www/python
 fi
-# Install rsync
+# Install packages
 
-if ! command -v rsync &> /dev/null
-then
-    echo "rsync could not be found, installing..."
-    sudo apt-get install rsync -y
-else
-    echo "rsync is already installed"
-fi
-
-# Install python3-venv
-if ! command -v python3-venv &> /dev/null
-then
-    echo "python3-venv could not be found, installing..."
-    sudo apt-get install python3-venv -y
-else
-    echo "python3-venv is already installed"
-fi
+# List of packages to install
+packages=(
+    "rsync"
+    "python3-venv"
+    "python3-dev"
+)
+# Loop through the packages and install them
+for package in "${packages[@]}"; do
+    if ! dpkg -l | grep -q "$package"; then
+        echo "Installing $package..."
+        sudo apt-get install -y "$package"
+    else
+        echo "$package is already installed"
+    fi
+done
