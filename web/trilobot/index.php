@@ -8,7 +8,7 @@ function flashUnderlights()
     $script_path = "/var/www/python/scripts";
 
     // Command to execute the Python script
-    $command = "$python $script_path/examples/flash_underlights.py";
+    $command = "$python $script_path/examples/flash_underlights.py > /dev/null 2>&1 &";
 
     // Execute the command and capture the output
     $output = shell_exec($command);
