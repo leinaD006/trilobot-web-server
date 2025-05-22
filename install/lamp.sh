@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 MARIA_DB_ROOT_PASSWORD="Password"
 

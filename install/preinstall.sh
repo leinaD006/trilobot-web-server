@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Sets up basic requirements for install scripts to be atomic
 

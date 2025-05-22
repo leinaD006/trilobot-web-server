@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Set up python environment
 python3 -m venv venv

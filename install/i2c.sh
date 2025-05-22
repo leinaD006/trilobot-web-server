@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Enable I2C on Raspberry Pi
 echo "Enabling I2C on Raspberry Pi..."
