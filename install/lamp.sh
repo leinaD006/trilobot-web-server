@@ -20,8 +20,9 @@ sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIA_DB_ROOT_PASSW
 # Remove default index.html
 sudo rm /var/www/html/index.html
 
-# Give apache user permission to gpio
+# Give apache user permission to gpio and i2c
 sudo usermod -a -G gpio www-data
+sudo usermod -a -G i2c www-data
 
 # Final restart
 sudo systemctl restart apache2
