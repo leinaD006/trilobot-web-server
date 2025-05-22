@@ -1,87 +1,26 @@
 <?php
+// Debug information
+echo "Current user: " . exec('whoami') . "\n";
+echo "Groups: " . exec('groups') . "\n";
+echo "Python path exists: " . (file_exists('/var/www/python/venv/bin/python') ? 'Yes' : 'No') . "\n";
+echo "Script path exists: " . (file_exists('/var/www/python/scripts/examples/flash_underlights.py') ? 'Yes' : 'No') . "\n";
 
-function flashUnderlights()
-{
-    // Path to the Python executable
-    $python = "/var/www/python/venv/bin/python";
-    // Path to the script
-    $script_path = "/var/www/python/scripts";
+// Set environment
+putenv('PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin');
 
-    // Command to execute the Python script
-    $command = "$python $script_path/examples/flash_underlights.py";
+// Try different approaches
+echo "\n=== Approach 1: Direct execution ===\n";
+$command1 = '/var/www/python/venv/bin/python /var/www/python/scripts/examples/flash_underlights.py 2>&1';
+$output1 = shell_exec($command1);
+echo "Output: " . ($output1 ?: 'No output') . "\n";
 
-    // Execute the command and capture the output
-    $output = shell_exec($command);
+echo "\n=== Approach 2: With sudo ===\n";
+$command2 = 'sudo /var/www/python/venv/bin/python /var/www/python/scripts/examples/flash_underlights.py 2>&1';
+$output2 = shell_exec($command2);
+echo "Output: " . ($output2 ?: 'No output') . "\n";
 
-    // Return the output
-    return $output;
-}
-
-# Button to trigger the flashUnderlights function
-if (isset($_POST['flash_underlights'])) {
-    $output = flashUnderlights();
-    echo "<pre>$output</pre>";
-}
+echo "\n=== Approach 3: Check Python script directly ===\n";
+$command3 = '/var/www/python/venv/bin/python -c "import RPi.GPIO as GPIO; print(\'GPIO import successful\')" 2>&1';
+$output3 = shell_exec($command3);
+echo "GPIO test: " . ($output3 ?: 'No output') . "\n";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trilobot Control</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            margin-top: 50px;
-        }
-
-        .btn-custom {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
-
-        .output {
-            margin-top: 20px;
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <h1 class="text-center">Trilobot Control</h1>
-        <form method="POST" action="">
-            <div class="text-center">
-                <button type="submit" name="flash_underlights" class="btn btn-custom">Flash Underlights</button>
-            </div>
-        </form>
-        <?php if (isset($output)): ?>
-            <div class="output">
-                <h5>Output:</h5>
-                <pre><?php echo htmlspecialchars($output); ?></pre>
-            </div>
-        <?php endif; ?>
-    </div>
-    <script>
-        $(document).ready(function () {
-            // Add any custom JavaScript here
-        });
-    </script>
-</body>
-
-</html>
