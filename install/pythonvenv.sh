@@ -10,7 +10,7 @@ fi
 python3 -m venv python/venv
 
 # Switch to environment
-source venv/bin/activate
+source python/venv/bin/activate
 
 # Install required packages
 pip install -r $INSTALL_DIR/requirements.txt
