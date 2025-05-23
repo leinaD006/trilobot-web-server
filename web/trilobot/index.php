@@ -294,6 +294,7 @@ $scripts = scanPythonDirectory($pythonDir);
     <script>
         function executeScript(scriptPath, scriptName) {
             const buttonId = 'btn-' + md5(scriptPath);
+            console.log('Executing script:', scriptPath, 'Button ID:', buttonId);
             const button = document.getElementById(buttonId);
             const outputArea = document.getElementById('output-area');
             const statusArea = document.getElementById('status-area');
