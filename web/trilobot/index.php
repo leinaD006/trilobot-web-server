@@ -1,7 +1,7 @@
 <?php
 // index.php - Main interface for Python script runner
 
-function scanPythonDirectory($dir, $baseDir = '/var/www/python')
+function scanPythonDirectory($dir, $baseDir = '/var/www/python/scripts')
 {
     $scripts = [];
 
