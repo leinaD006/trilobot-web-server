@@ -35,7 +35,7 @@ function scanPythonDirectory($dir, $baseDir = '/var/www/python/scripts')
     return $scripts;
 }
 
-$pythonDir = '/var/www/python';
+$pythonDir = '/var/www/python/scripts';
 $scripts = scanPythonDirectory($pythonDir);
 ?>
 
