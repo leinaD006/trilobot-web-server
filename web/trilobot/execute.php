@@ -9,7 +9,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 // Configuration
 $pythonBasePath = '/var/www/python/scripts';
 $pythonExecutable = '/var/www/python/venv/bin/python'; // Adjust path as needed
-$maxExecutionTime = 0; // Maximum execution time in seconds
+$maxExecutionTime = 30; // Maximum execution time in seconds
 $maxOutputSize = 1024 * 1024; // Maximum output size (1MB)
 
 function sendJsonResponse($success, $output = '', $error = '')
@@ -31,56 +31,6 @@ function sanitizeOutput($output)
         $output = substr($output, 0, $GLOBALS['maxOutputSize']) . "\n\n[Output truncated - exceeded maximum size]";
     }
     return $output;
-}
-
-function managePids($action, $scriptPath = null, $pid = null)
-{
-    global $pidFile;
-
-    $pids = [];
-    if (file_exists($pidFile)) {
-        $pids = json_decode(file_get_contents($pidFile), true) ?: [];
-    }
-
-    switch ($action) {
-        case 'add':
-            $pids[$scriptPath] = $pid;
-            break;
-        case 'remove':
-            unset($pids[$scriptPath]);
-            break;
-        case 'get':
-            return isset($pids[$scriptPath]) ? $pids[$scriptPath] : null;
-        case 'cleanup':
-            // Remove dead processes
-            foreach ($pids as $script => $processPid) {
-                if (!isProcessRunning($processPid)) {
-                    unset($pids[$script]);
-                }
-            }
-            break;
-    }
-
-    file_put_contents($pidFile, json_encode($pids));
-    return $pids;
-}
-
-function isProcessRunning($pid)
-{
-    return file_exists("/proc/$pid");
-}
-
-function killProcess($pid)
-{
-    if (isProcessRunning($pid)) {
-        exec("kill -TERM $pid 2>/dev/null");
-        sleep(1);
-        if (isProcessRunning($pid)) {
-            exec("kill -KILL $pid 2>/dev/null");
-        }
-        return true;
-    }
-    return false;
 }
 
 // Only allow POST requests
@@ -131,26 +81,18 @@ if (!file_exists($pythonExecutable)) {
 }
 
 try {
-    // Clean up any dead processes first
-    managePids('cleanup');
-
-    // Check if script is already running
-    $existingPid = managePids('get', $requestedScript);
-    if ($existingPid && isProcessRunning($existingPid)) {
-        sendJsonResponse(false, '', 'Script is already running. Cancel it first before starting again.');
-    }
-
-    // No execution time limit for long-running scripts
-    set_time_limit(0);
+    // Set execution time limit
+    set_time_limit($maxExecutionTime + 5);
 
     // Change to the script's directory
     $scriptDir = dirname($realScriptPath);
     $scriptName = basename($realScriptPath);
 
-    // Build the command without timeout
+    // Build the command
     $command = sprintf(
-        'cd %s && %s %s 2>&1 & echo $!',
+        'cd %s && timeout %d %s %s 2>&1',
         escapeshellarg($scriptDir),
+        $maxExecutionTime,
         escapeshellarg($pythonExecutable),
         escapeshellarg($scriptName)
     );
@@ -159,47 +101,33 @@ try {
     $logMessage = date('Y-m-d H:i:s') . " - Executing: " . $requestedScript . " from IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
     error_log($logMessage, 3, '/var/log/python_runner.log');
 
-    // Start the process in background and get PID
-    $pidOutput = shell_exec($command);
-    $pid = trim($pidOutput);
+    // Execute the command
+    $output = '';
+    $returnCode = 0;
 
-    if (!$pid || !is_numeric($pid)) {
-        sendJsonResponse(false, '', 'Failed to start script process');
-    }
+    $startTime = microtime(true);
+    exec($command, $outputLines, $returnCode);
+    $executionTime = microtime(true) - $startTime;
 
-    // Store the PID
-    managePids('add', $requestedScript, $pid);
+    $output = implode("\n", $outputLines);
 
-    // Wait a moment to check if process started successfully
-    usleep(500000); // 0.5 seconds
-
-    if (!isProcessRunning($pid)) {
-        managePids('remove', $requestedScript);
-        sendJsonResponse(false, '', 'Script process failed to start or exited immediately');
-    }
-
-    // For long-running scripts, we return immediately with success
-    $output = "Script started successfully in background.\n";
-    $output .= "Process ID: " . $pid . "\n";
+    // Add execution info
+    $output .= "\n\n--- Execution Info ---\n";
+    $output .= "Execution Time: " . number_format($executionTime, 3) . " seconds\n";
+    $output .= "Return Code: " . $returnCode . "\n";
     $output .= "Script: " . $requestedScript . "\n";
-    $output .= "Use the Cancel button to stop the script.\n\n";
-    $output .= "Note: Output from long-running scripts is not captured in real-time.\n";
-    $output .= "Check your script's own logging for detailed output.";
-
 
     // Sanitize output
     $output = sanitizeOutput($output);
 
-    sendJsonResponse(true, $output, '');
-
-    // if ($returnCode === 0) {
-    //     sendJsonResponse(true, $output, '');
-    // } else if ($returnCode === 124) {
-    //     // Timeout error
-    //     sendJsonResponse(false, $output, 'Script execution timed out after ' . $maxExecutionTime . ' seconds');
-    // } else {
-    //     sendJsonResponse(false, $output, 'Script exited with error code: ' . $returnCode);
-    // }
+    if ($returnCode === 0) {
+        sendJsonResponse(true, $output, '');
+    } else if ($returnCode === 124) {
+        // Timeout error
+        sendJsonResponse(false, $output, 'Script execution timed out after ' . $maxExecutionTime . ' seconds');
+    } else {
+        sendJsonResponse(false, $output, 'Script exited with error code: ' . $returnCode);
+    }
 
 } catch (Exception $e) {
     sendJsonResponse(false, '', 'Execution error: ' . $e->getMessage());

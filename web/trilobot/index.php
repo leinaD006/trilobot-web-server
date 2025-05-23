@@ -153,24 +153,6 @@ $scripts = scanPythonDirectory($pythonDir);
         .script-button.loading {
             background: linear-gradient(135deg, #95a5a6, #7f8c8d);
             cursor: not-allowed;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cancel-button {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8em;
-            margin-left: 10px;
-        }
-
-        .cancel-button:hover {
-            background: #c0392b;
         }
 
         .output-area {
@@ -282,9 +264,8 @@ $scripts = scanPythonDirectory($pythonDir);
                     $currentDir = '';
                     foreach ($scripts as $script):
                         if ($script['directory'] !== $currentDir):
-                            if ($currentDir !== '') {
+                            if ($currentDir !== '')
                                 echo '</div>';
-                            }
                             $currentDir = $script['directory'];
                             echo '<div class="script-group">';
                             echo '<div class="group-title">' . ($currentDir === '.' ? 'Root Directory' : htmlspecialchars($currentDir)) . '</div>';
@@ -311,20 +292,16 @@ $scripts = scanPythonDirectory($pythonDir);
     </div>
 
     <script>
-        let currentExecution = null;
-
         function executeScript(scriptPath, scriptName) {
             const buttonId = 'btn-' + pathToId(scriptPath);
+            console.log('Executing script:', scriptPath, 'Button ID:', buttonId);
             const button = document.getElementById(buttonId);
             const outputArea = document.getElementById('output-area');
             const statusArea = document.getElementById('status-area');
 
             // Disable button and show loading state
             button.classList.add('loading');
-            button.innerHTML = `
-                <span><span class="loading-spinner"></span>Executing...</span>
-                <button class="cancel-button" onclick="cancelScript(event, '${scriptPath}')">Cancel</button>
-            `;
+            button.innerHTML = '<span class="loading-spinner"></span>Executing...';
             button.disabled = true;
 
             // Show status
@@ -337,19 +314,10 @@ $scripts = scanPythonDirectory($pythonDir);
             const formData = new FormData();
             formData.append('script', scriptPath);
 
-            // Create AbortController for cancellation
-            const controller = new AbortController();
-            currentExecution = {
-                controller: controller,
-                scriptPath: scriptPath,
-                buttonId: buttonId
-            };
-
             // Execute script via AJAX
             fetch('execute.php', {
                 method: 'POST',
-                body: formData,
-                signal: controller.signal
+                body: formData
             })
                 .then(response => response.json())
                 .then(data => {
@@ -362,40 +330,15 @@ $scripts = scanPythonDirectory($pythonDir);
                     }
                 })
                 .catch(error => {
-                    if (error.name === 'AbortError') {
-                        statusArea.innerHTML = '<div class="status info">Script execution cancelled by user</div>';
-                        outputArea.value = 'Script execution was cancelled.';
-                    } else {
-                        statusArea.innerHTML = '<div class="status error">Request failed: ' + error.message + '</div>';
-                        outputArea.value = 'Failed to execute script.';
-                    }
+                    statusArea.innerHTML = '<div class="status error">Request failed: ' + error.message + '</div>';
+                    outputArea.value = 'Failed to execute script.';
                 })
                 .finally(() => {
                     // Re-enable button
                     button.classList.remove('loading');
                     button.innerHTML = scriptName;
                     button.disabled = false;
-                    currentExecution = null;
                 });
-        }
-
-        function cancelScript(event, scriptPath) {
-            event.stopPropagation(); // Prevent triggering the parent button
-
-            if (currentExecution && currentExecution.scriptPath === scriptPath) {
-                // Cancel the fetch request
-                currentExecution.controller.abort();
-
-                // Send cancellation request to server
-                const formData = new FormData();
-                formData.append('action', 'cancel');
-                formData.append('script', scriptPath);
-
-                fetch('execute.php', {
-                    method: 'POST',
-                    body: formData
-                });
-            }
         }
 
         function clearOutput() {
