@@ -273,7 +273,7 @@ $scripts = scanPythonDirectory($pythonDir);
                         ?>
                         <button class="script-button"
                             onclick="executeScript('<?php echo htmlspecialchars($script['path']); ?>', '<?php echo htmlspecialchars($script['name']); ?>')"
-                            id="btn-<?php echo md5($script['path']); ?>">
+                            id="btn-<?php echo str_replace('/', '-', explode(".", $script['path'])[0], ); ?>">
                             <?php echo htmlspecialchars($script['name']); ?>
                         </button>
                     <?php endforeach; ?>
@@ -293,7 +293,7 @@ $scripts = scanPythonDirectory($pythonDir);
 
     <script>
         function executeScript(scriptPath, scriptName) {
-            const buttonId = 'btn-' + md5(scriptPath);
+            const buttonId = 'btn-' + pathToId(scriptPath);
             console.log('Executing script:', scriptPath, 'Button ID:', buttonId);
             const button = document.getElementById(buttonId);
             const outputArea = document.getElementById('output-area');
@@ -346,17 +346,9 @@ $scripts = scanPythonDirectory($pythonDir);
             document.getElementById('status-area').innerHTML = '';
         }
 
-        // Simple MD5 hash function for button IDs
-        function md5(str) {
-            // Simple hash function - in production, you might want a proper MD5 implementation
-            let hash = 0;
-            if (str.length === 0) return hash.toString();
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32-bit integer
-            }
-            return Math.abs(hash).toString();
+        function pathToId(str) {
+            // Replace slashes with dashes and remove file extension
+            return str.replace(/\//g, '-').replace(/\..+$/, '');
         }
     </script>
 </body>
