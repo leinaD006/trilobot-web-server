@@ -7,7 +7,7 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Configuration
-$pythonBasePath = '/var/www/python';
+$pythonBasePath = '/var/www/python/scripts';
 $pythonExecutable = '/usr/bin/python/venv/bin/python'; // Adjust path as needed
 $maxExecutionTime = 30; // Maximum execution time in seconds
 $maxOutputSize = 1024 * 1024; // Maximum output size (1MB)
