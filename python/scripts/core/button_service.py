@@ -9,8 +9,11 @@ class ScriptLoader:
         self.tbot = Trilobot()
 
     def load_config(self):
+        print('hello world')
         if os.path.exists(self.config_file):
+            print('exists')
             with open(self.config_file, 'r') as f:
+                print('opened')
                 for line in f:
                     print(line)
                     line = line.strip()
