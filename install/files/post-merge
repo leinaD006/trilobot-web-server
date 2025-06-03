@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Runs the deploy script after a successful merge
+echo "Running post-merge hook."
+
+DEPLOY_SCRIPT="deploy.sh"
+
+# Check if the deployment script exists and is executable
+if [ -x "$DEPLOY_SCRIPT" ]; then
+    echo "Running deployment script: $DEPLOY_SCRIPT"
+    bash "$DEPLOY_SCRIPT"
+else
+    echo "Error: Deployment script not found or not executable: $DEPLOY_SCRIPT"
+    echo "Please check the path and permissions."
+    exit 1
+fi
+
+echo "Post-merge hook completed."
