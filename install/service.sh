@@ -6,5 +6,5 @@ set -e
 sudo cp $INSTALL_DIR/ipaddress.service /etc/systemd/system/ipaddress.service
 
 sudo systemctl daemon-reload
-sudo systemctl enable mypythonscript.service
+sudo systemctl enable ipaddress.service
 
