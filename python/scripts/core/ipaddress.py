@@ -14,6 +14,7 @@ light_groups = {
     "9" : (LIGHT_MIDDLE_RIGHT, LIGHT_MIDDLE_LEFT),
     "0" : (LIGHT_MIDDLE_RIGHT, LIGHT_FRONT_RIGHT, LIGHT_FRONT_LEFT, LIGHT_MIDDLE_LEFT),
     "." : (LIGHT_REAR_RIGHT,),
+    "a" : (LIGHT_REAR_RIGHT, LIGHT_MIDDLE_RIGHT, LIGHT_FRONT_RIGHT, LIGHT_FRONT_LEFT, LIGHT_MIDDLE_LEFT, LIHGHT_REAR_LEFT),
 }
 
 RED = (255, 0, 0)
@@ -39,8 +40,19 @@ tbot = Trilobot()
 
 print(f"WiFi IP Address: {wifi_ip}")
 
-for c in wifi_ip:
-    tbot.set_underlights(light_groups[c], RED)
-    sleep(3)
-    tbot.clear_underlights(light_groups[c])
-    sleep(1)
+while True:
+    tbot.set_underlights(light_groups["a"], GREEN)
+    sleep(0.5)
+    tbot.clear_underlights(light_groups["a"])
+    sleep(0.5)
+
+    for c in wifi_ip:
+        if tbot.read_button(BUTTON_X):
+            print("Button A pressed, exiting...")
+            tbot.clear_underlights(light_groups["a"])
+            exit(0)
+
+        tbot.set_underlights(light_groups[c], RED)
+        sleep(2)
+        tbot.clear_underlights(light_groups[c])
+        sleep(0.5)
