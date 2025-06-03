@@ -1,5 +1,7 @@
 import netifaces
+import time
 from trilobot import *
+
 light_groups = {
     "1" : (LIGHT_MIDDLE_LEFT),
     "2" : (LIGHT_FRONT_LEFT),
@@ -40,6 +42,6 @@ print(f"WiFi IP Address: {wifi_ip}")
 for c in wifi_ip:
     print(light_groups["0"])
     tbot.set_underlights(light_groups["0"], RED)
-    sleep(1)
+    time.sleep(1)
     tbot.clear_underlights(light_groups["0"])
-    sleep(0.2)
+    time.sleep(0.2)
