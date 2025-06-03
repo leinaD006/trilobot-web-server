@@ -1,16 +1,16 @@
-import socket
+import netifaces
 
-def get_ip_address():
+def get_wifi_ip(interface='wlan0'):
     try:
-        # This doesn't need to be a real reachable address; just used to find the right interface
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))  # Google's public DNS
-        ip = s.getsockname()[0]
-        s.close()
-        return ip
-    except Exception as e:
-        return f"Error getting IP address: {e}"
+        addresses = netifaces.ifaddresses(interface)
+        ip_info = addresses.get(netifaces.AF_INET)
+        if ip_info and len(ip_info) > 0:
+            return ip_info[0]['addr']
+        else:
+            return "No IP address found for interface"
+    except ValueError:
+        return f"Interface '{interface}' not found"
 
 # Usage
-ip_address = get_ip_address()
-print(f"My IP address is: {ip_address}")
+wifi_ip = get_wifi_ip()
+print(f"Wi-Fi IP: {wifi_ip}")
