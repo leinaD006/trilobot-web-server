@@ -1,0 +1,11 @@
+[Unit]
+Description=Run IP Address script on start
+After=network.target
+
+[Service]
+ExecStart=/var/www/python/venv/bin/python /var/www/python/scripts/core/ipaddress.py
+WorkingDirectory=/home/%u
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
