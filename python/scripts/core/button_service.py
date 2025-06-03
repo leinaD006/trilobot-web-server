@@ -8,15 +8,6 @@ class ScriptLoader:
         self.config = {}
         self.tbot = Trilobot()
 
-        if not os.path.exists(config_file):
-            with open(config_file, 'w') as f:
-                f.write("BASE_DIR=/var/www/python/\n")
-                f.write("BUTTON_A=examples/flash_underlights.py\n")
-                f.write("BUTTON_B=user/script_2.py\n")
-                f.write("BUTTON_X=user/script_3.py\n")
-                f.write("BUTTON_Y=user/script_4.py\n")
-
-
     def load_config(self):
         if os.path.exists(self.config_file):
             with open(self.config_file, 'r') as f:
@@ -32,6 +23,9 @@ class ScriptLoader:
                             print(f"Invalid line in config: {line}")
                     else:
                         print(f"Invalid line in config: {line}")
+        else:
+            print(f"Configuration file {self.config_file} does not exist. Please check the path.")
+            exit(1)
                         
     def run_script(self, script_path):
         full_path = os.path.join(self.config['BASE_DIR'], script_path)
