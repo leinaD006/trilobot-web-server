@@ -12,5 +12,5 @@ def get_wifi_ip(interface='wlan0'):
         return f"Interface '{interface}' not found"
 
 # Usage
-wifi_ip = get_wifi_ip()
+wifi_ip = get_wifi_ip('eth0')
 print(f"Wi-Fi IP: {wifi_ip}")
