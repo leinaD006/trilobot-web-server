@@ -3,17 +3,17 @@ from time import sleep
 from trilobot import *
 
 light_groups = {
-    "1" : (LIGHT_MIDDLE_LEFT),
-    "2" : (LIGHT_FRONT_LEFT),
+    "1" : (LIGHT_MIDDLE_LEFT,),
+    "2" : (LIGHT_FRONT_LEFT,),
     "3" : (LIGHT_MIDDLE_LEFT, LIGHT_FRONT_LEFT),
-    "4" : (LIGHT_FRONT_RIGHT),
+    "4" : (LIGHT_FRONT_RIGHT,),
     "5" : (LIGHT_FRONT_RIGHT, LIGHT_MIDDLE_LEFT),
     "6" : (LIGHT_FRONT_RIGHT, LIGHT_FRONT_LEFT),
     "7" : (LIGHT_FRONT_RIGHT, LIGHT_FRONT_LEFT, LIGHT_MIDDLE_LEFT),
-    "8" : (LIGHT_MIDDLE_RIGHT),
+    "8" : (LIGHT_MIDDLE_RIGHT,),
     "9" : (LIGHT_MIDDLE_RIGHT, LIGHT_MIDDLE_LEFT),
     "0" : (LIGHT_MIDDLE_RIGHT, LIGHT_FRONT_RIGHT, LIGHT_FRONT_LEFT, LIGHT_MIDDLE_LEFT),
-    "." : (LIGHT_REAR_RIGHT),
+    "." : (LIGHT_REAR_RIGHT,),
 }
 
 RED = (255, 0, 0)
@@ -40,8 +40,7 @@ tbot = Trilobot()
 print(f"WiFi IP Address: {wifi_ip}")
 
 for c in wifi_ip:
-    print(light_groups["0"])
-    tbot.set_underlights(light_groups["0"], RED)
+    tbot.set_underlights(light_groups[c], RED)
     sleep(1)
-    tbot.clear_underlights(light_groups["0"])
+    tbot.clear_underlights(light_groups[c])
     sleep(0.2)
