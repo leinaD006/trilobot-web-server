@@ -9,12 +9,12 @@ fi
 
 # Create config file if it doesn't exist
 if [ ! -f "$PYTHON_DIR/buttons.conf" ]; then
-    sudo touch "$PYTHON_DIR/buttons.conf"
-    sudo echo "BASE_DIR=$PYTHON_DIR" > "$PYTHON_DIR/buttons.conf"
-    sudo echo "BUTTON_A=examples/flash_underlights.py" >> "$PYTHON_DIR/buttons.conf"
-    sudo echo "BUTTON_B=user/test1.py" >> "$PYTHON_DIR/buttons.conf"
-    sudo echo "BUTTON_X=user/test2.py" >> "$PYTHON_DIR/buttons.conf"
-    sudo echo "BUTTON_Y=user/test3.py" >> "$PYTHON_DIR/buttons.conf"
+    touch "$PYTHON_DIR/buttons.conf"
+    echo "BASE_DIR=$PYTHON_DIR" > "$PYTHON_DIR/buttons.conf"
+    echo "BUTTON_A=examples/flash_underlights.py" >> "$PYTHON_DIR/buttons.conf"
+    echo "BUTTON_B=user/test1.py" >> "$PYTHON_DIR/buttons.conf"
+    echo "BUTTON_X=user/test2.py" >> "$PYTHON_DIR/buttons.conf"
+    echo "BUTTON_Y=user/test3.py" >> "$PYTHON_DIR/buttons.conf"
 fi
 
-echo "Python configuration file set up successfully at $PYTHON_DIR/buttons.conf."
+echo "Python configuration file set up successfully at $PYTHON_DIR/buttons.config."
