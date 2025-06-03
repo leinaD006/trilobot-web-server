@@ -15,6 +15,7 @@ class ScriptLoader:
                     line = line.strip()
                     if '=' in line:
                         key, value = line.split('=', 1)
+                        print(key, value)
                         key = key.strip()
                         value = value.strip()
                         if key and value:
