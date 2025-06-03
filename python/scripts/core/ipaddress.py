@@ -39,7 +39,7 @@ print(f"WiFi IP Address: {wifi_ip}")
 
 for c in wifi_ip:
     print(light_groups["0"])
-    tbot.set_underlights(light_groups[c], RED)
+    tbot.set_underlights(light_groups["0"], RED)
     sleep(1)
-    tbot.clear_underlights(light_groups[c])
+    tbot.clear_underlights(light_groups["0"])
     sleep(0.2)
