@@ -33,7 +33,7 @@ def get_wifi_ip(interface='wlan0'):
     except ValueError:
         return f"Interface '{interface}' not found"
     
-# Usage
+sleep(10) # Wait to ensure network interfaces are up
 wifi_ip = get_wifi_ip("eth0")
 
 tbot = Trilobot()
@@ -43,12 +43,16 @@ print(f"WiFi IP Address: {wifi_ip}")
 if wifi_ip == "No IP address found for interface":
     print("Connect to WiFi to get an IP address.")
     for i in range(3):
+        if tbot.read_button(BUTTON_X):
+            print("Button X pressed, exiting...")
+            tbot.clear_underlights(light_groups["a"])
+            exit(0)
         tbot.set_underlights(light_groups["a"], RED)
         sleep(0.5)
         tbot.clear_underlights(light_groups["a"])
         sleep(0.5)
     print("Exiting script.")
-    exit(0)
+    exit(1)
 
 while True:
     tbot.set_underlights(light_groups["a"], GREEN)
@@ -58,7 +62,7 @@ while True:
 
     for c in wifi_ip:
         if tbot.read_button(BUTTON_X):
-            print("Button A pressed, exiting...")
+            print("Button X pressed, exiting...")
             tbot.clear_underlights(light_groups["a"])
             exit(0)
 
