@@ -1,9 +1,9 @@
 from trilobot import *
 
-tbot = None
+singletonBot = None
 
 def Trilobot():
-    global tbot
-    if tbot is None:
-        tbot = Trilobot()
-    return tbot
+    global singletonBot
+    if singletonBot is None:
+        singletonBot = Trilobot()
+    return singletonBot
