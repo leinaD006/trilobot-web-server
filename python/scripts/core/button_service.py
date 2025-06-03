@@ -40,18 +40,18 @@ class ScriptLoader:
 
     def flash_buttons(self, num_flashes=1):
         for _ in range(num_flashes):
-            self.tbot.set_button_led('BUTTON_A', 1)
+            self.tbot.set_button_led(BUTTON_A, 1)
             time.sleep(0.1)
-            self.tbot.set_button_led('BUTTON_A', 0)
-            self.tbot.set_button_led('BUTTON_B', 1)
+            self.tbot.set_button_led(BUTTON_A, 0)
+            self.tbot.set_button_led(BUTTON_B, 1)
             time.sleep(0.1)
-            self.tbot.set_button_led('BUTTON_B', 0)
-            self.tbot.set_button_led('BUTTON_X', 1)
+            self.tbot.set_button_led(BUTTON_B, 0)
+            self.tbot.set_button_led(BUTTON_X, 1)
             time.sleep(0.1)
-            self.tbot.set_button_led('BUTTON_X', 0)
-            self.tbot.set_button_led('BUTTON_Y', 1)
+            self.tbot.set_button_led(BUTTON_X, 0)
+            self.tbot.set_button_led(BUTTON_Y, 1)
             time.sleep(0.1)
-            self.tbot.set_button_led('BUTTON_Y', 0)
+            self.tbot.set_button_led(BUTTON_Y, 0)
     
 
 
@@ -63,17 +63,17 @@ if __name__ == "__main__":
     loader.flash_buttons(2)
 
     while True:
-        if loader.tbot.read_button('BUTTON_A'):
-            loader.run_script(loader.config.get('BUTTON_A', ''))
+        if loader.tbot.read_button(BUTTON_A):
+            loader.run_script(loader.config.get(BUTTON_A, ''))
             
-        if loader.tbot.read_button('BUTTON_B'):
-            loader.run_script(loader.config.get('BUTTON_B', ''))
+        if loader.tbot.read_button(BUTTON_B):
+            loader.run_script(loader.config.get(BUTTON_B, ''))
 
-        if loader.tbot.read_button('BUTTON_X'):
-            loader.run_script(loader.config.get('BUTTON_X', ''))
+        if loader.tbot.read_button(BUTTON_X):
+            loader.run_script(loader.config.get(BUTTON_X, ''))
 
-        if loader.tbot.read_button('BUTTON_Y'):
-            loader.run_script(loader.config.get('BUTTON_Y', ''))
+        if loader.tbot.read_button(BUTTON_Y):
+            loader.run_script(loader.config.get(BUTTON_Y, ''))
             
 
 
