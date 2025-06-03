@@ -38,7 +38,7 @@ tbot = Trilobot()
 print(f"WiFi IP Address: {wifi_ip}")
 
 for c in wifi_ip:
-    print(light_groups[c])
+    print(light_groups["0"])
     tbot.set_underlights(light_groups[c], RED)
     sleep(1)
     tbot.clear_underlights(light_groups[c])
