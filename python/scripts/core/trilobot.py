@@ -3,6 +3,7 @@ import os
 
 # Temporarily remove current directory from path to import original trilobot
 current_dir = os.path.dirname(os.path.abspath(__file__))
+print(f"Current directory: {current_dir}")
 if current_dir in sys.path:
     sys.path.remove(current_dir)
 
