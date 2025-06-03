@@ -65,7 +65,7 @@ class ScriptLoader:
 if __name__ == "__main__":
     config_file = '/var/www/python/buttons.conf'
     loader = ScriptLoader(config_file)
-
+    print('Starting button service...')
     loader.load_config()
     loader.flash_buttons(2)
 
