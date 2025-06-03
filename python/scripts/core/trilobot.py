@@ -1,17 +1,26 @@
 import sys
 import os
 
-# Temporarily remove current directory from path to import original trilobot
+# Remove current directory from Python path temporarily
 current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir in sys.path:
-    sys.path.remove(current_dir)
+original_path = sys.path[:]
+sys.path = [p for p in sys.path if os.path.abspath(p) != current_dir]
 
-# Import everything from the original trilobot module
-from trilobot import *
-from trilobot import Trilobot as _OriginalTrilobot
-
-# Restore the path
-sys.path.insert(0, current_dir)
+try:
+    # Import the original trilobot module
+    import trilobot as _original_trilobot
+    
+    # Import everything from original module into current namespace
+    for attr_name in dir(_original_trilobot):
+        if not attr_name.startswith('_'):
+            globals()[attr_name] = getattr(_original_trilobot, attr_name)
+    
+    # Keep reference to original Trilobot class
+    _OriginalTrilobot = _original_trilobot.Trilobot
+    
+finally:
+    # Restore original Python path
+    sys.path = original_path
 
 singletonBot = None
 
