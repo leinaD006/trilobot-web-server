@@ -1,9 +1,10 @@
 #!/bin/bash
 set -e
 
-# Set up the ipaddress service
-
-sudo mkdir -p /opt/ipaddress
+# Check if working directory exists
+if [ ! -d "/opt/ipaddress" ]
+    sudo mkdir -p /opt/ipaddress
+fi
 
 sudo cp $INSTALL_DIR/ipaddress.service /etc/systemd/system/ipaddress.service
 
