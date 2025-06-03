@@ -23,6 +23,8 @@ class ScriptLoader:
                             print(f"Invalid line in config: {line}")
                     else:
                         print(f"Invalid line in config: {line}")
+
+            print(self.config)
         else:
             print(f"Configuration file {self.config_file} does not exist. Please check the path.")
             exit(1)
@@ -64,16 +66,16 @@ if __name__ == "__main__":
 
     while True:
         if loader.tbot.read_button(BUTTON_A):
-            loader.run_script(loader.config.get(BUTTON_A, ''))
+            loader.run_script(loader.config['BUTTON_A'])
             
         if loader.tbot.read_button(BUTTON_B):
-            loader.run_script(loader.config.get(BUTTON_B, ''))
+            loader.run_script(loader.config['BUTTON_B'])
 
         if loader.tbot.read_button(BUTTON_X):
-            loader.run_script(loader.config.get(BUTTON_X, ''))
+            loader.run_script(loader.config['BUTTON_X'])
 
         if loader.tbot.read_button(BUTTON_Y):
-            loader.run_script(loader.config.get(BUTTON_Y, ''))
+            loader.run_script(loader.config['BUTTON_Y'])
             
 
 
