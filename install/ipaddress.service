@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/var/www/python/venv/bin/python /var/www/python/scripts/core/ipaddress.py
-WorkingDirectory=/home/%u
+WorkingDirectory=/opt/ipaddress
 Restart=always
 
 [Install]
