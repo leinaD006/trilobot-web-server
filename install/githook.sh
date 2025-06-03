@@ -2,7 +2,7 @@
 set -e
 
 # Add post-merge hook to .git/hooks
-$HOOK_DIR="$SCRIPT_DIR/.git/hooks"
+HOOK_DIR="$SCRIPT_DIR/.git/hooks"
 if [ ! -d "$HOOK_DIR" ]; then
     mkdir -p "$HOOK_DIR"
 fi
