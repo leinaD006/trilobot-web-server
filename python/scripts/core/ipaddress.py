@@ -40,6 +40,16 @@ tbot = Trilobot()
 
 print(f"WiFi IP Address: {wifi_ip}")
 
+if wifi_ip == "No IP address found for interface":
+    print("Connect to WiFi to get an IP address.")
+    for i in range(3):
+        tbot.set_underlights(light_groups["a"], RED)
+        sleep(0.5)
+        tbot.clear_underlights(light_groups["a"])
+        sleep(0.5)
+    print("Exiting script.")
+    exit(0)
+
 while True:
     tbot.set_underlights(light_groups["a"], GREEN)
     sleep(0.5)
@@ -52,7 +62,7 @@ while True:
             tbot.clear_underlights(light_groups["a"])
             exit(0)
 
-        tbot.set_underlights(light_groups[c], RED)
+        tbot.set_underlights(light_groups[c], BLUE)
         sleep(2)
         tbot.clear_underlights(light_groups[c])
         sleep(0.5)
