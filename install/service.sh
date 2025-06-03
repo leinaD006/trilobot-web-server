@@ -2,7 +2,7 @@
 set -e
 
 # Check if working directory exists
-if [ ! -d "/opt/ipaddress" ]
+if [ ! -d "/opt/ipaddress" ]; then
     sudo mkdir -p /opt/ipaddress
 fi
 
