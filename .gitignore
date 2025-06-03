@@ -1,4 +1,5 @@
 python/venv
 python/scripts/examples
+python/buttons.conf
 deploy.log
 .vscode
