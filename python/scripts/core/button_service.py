@@ -9,17 +9,12 @@ class ScriptLoader:
         self.tbot = Trilobot()
 
     def load_config(self):
-        print('hello world')
         if os.path.exists(self.config_file):
-            print('exists')
             with open(self.config_file, 'r') as f:
-                print('opened')
                 for line in f:
-                    print(line)
                     line = line.strip()
                     if '=' in line:
                         key, value = line.split('=', 1)
-                        print(key, value)
                         key = key.strip()
                         value = value.strip()
                         if key and value:
@@ -29,7 +24,6 @@ class ScriptLoader:
                     else:
                         print(f"Invalid line in config: {line}")
 
-            print(self.config)
         else:
             print(f"Configuration file {self.config_file} does not exist. Please check the path.")
             exit(1)
@@ -65,7 +59,6 @@ class ScriptLoader:
 if __name__ == "__main__":
     config_file = '/var/www/python/buttons.conf'
     loader = ScriptLoader(config_file)
-    print('Starting button service...')
     loader.load_config()
     loader.flash_buttons(2)
 
