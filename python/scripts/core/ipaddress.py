@@ -31,7 +31,7 @@ def get_wifi_ip(interface='wlan0'):
         return f"Interface '{interface}' not found"
     
 # Usage
-wifi_ip = get_wifi_ip("en0")
+wifi_ip = get_wifi_ip("eth0")
 
 tbot = Trilobot()
 
