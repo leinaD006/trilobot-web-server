@@ -12,6 +12,7 @@ class ScriptLoader:
         if os.path.exists(self.config_file):
             with open(self.config_file, 'r') as f:
                 for line in f:
+                    print(line)
                     line = line.strip()
                     if '=' in line:
                         key, value = line.split('=', 1)
