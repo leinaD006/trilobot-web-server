@@ -3,10 +3,10 @@ set -e
 
 # Set up the ipaddress service
 
-sudo mkdir -p /opt/ipaddress
+mkdir -p /opt/ipaddress
 
-sudo cp $INSTALL_DIR/ipaddress.service /etc/systemd/system/ipaddress.service
+cp $INSTALL_DIR/ipaddress.service /etc/systemd/system/ipaddress.service
 
-sudo systemctl daemon-reload
-sudo systemctl enable ipaddress.service
+systemctl daemon-reload
+systemctl enable ipaddress.service
 
