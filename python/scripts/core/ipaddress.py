@@ -31,13 +31,14 @@ def get_wifi_ip(interface='wlan0'):
         return f"Interface '{interface}' not found"
     
 # Usage
-wifi_ip = get_wifi_ip("eth0")
+wifi_ip = get_wifi_ip("en0")
 
 tbot = Trilobot()
 
 print(f"WiFi IP Address: {wifi_ip}")
 
 for c in wifi_ip:
+    print(light_groups[c])
     tbot.set_underlights(light_groups[c], RED)
     sleep(1)
     tbot.clear_underlights(light_groups[c])
