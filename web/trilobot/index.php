@@ -12,16 +12,20 @@ function scanPythonDirectory($dir, $baseDir = '/var/www/python/scripts')
     $iterator = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator(
             $dir,
-            RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::FOLLOW_SYMLINKS
+            RecursiveDirectoryIterator::SKIP_DOTS
         ),
         RecursiveIteratorIterator::SELF_FIRST
     );
 
     foreach ($iterator as $file) {
-        // Follow symlinks: check if file is a symlink and points to a file
-        if ($file->isFile() && $file->getExtension() === 'py') {
-            $realPath = $file->getRealPath();
-            $relativePath = str_replace($baseDir . '/', '', $realPath);
+        // Handle both regular files and symlinks
+        if (($file->isFile() || $file->isLink()) && $file->getExtension() === 'py') {
+            $realPath = $file->isLink() ? readlink($file->getPathname()) : $file->getRealPath();
+            // If symlink path is relative, make it absolute
+            if ($file->isLink() && !str_starts_with($realPath, '/')) {
+                $realPath = dirname($file->getPathname()) . '/' . $realPath;
+            }
+            $relativePath = str_replace($baseDir . '/', '', $file->getPathname());
             $scripts[] = [
                 'name' => $file->getBasename('.py'),
                 'path' => $relativePath,
