@@ -36,7 +36,7 @@ class ScriptLoader:
         if os.path.exists(full_path):
             try:
                 with open(full_path, 'r') as script_file:
-                    exec(script_file.read(), locals={'Trilobot': self.tbot})
+                    exec(script_file.read(), {}, {'Trilobot': self.tbot})
             except Exception as e:
                 print(f"Error executing script {full_path}: {e}")
         else:
