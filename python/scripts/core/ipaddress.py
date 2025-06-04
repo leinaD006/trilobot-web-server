@@ -17,9 +17,9 @@ light_groups = {
     "a" : (LIGHT_REAR_RIGHT, LIGHT_MIDDLE_RIGHT, LIGHT_FRONT_RIGHT, LIGHT_FRONT_LEFT, LIGHT_MIDDLE_LEFT, LIGHT_REAR_LEFT),
 }
 
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+RED = (50, 0, 0)
+GREEN = (0, 50, 0)
+BLUE = (0, 0, 50)
 
 
 def get_wifi_ip(interface='wlan0'):
