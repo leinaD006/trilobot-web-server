@@ -38,28 +38,15 @@ class ScriptLoader:
                 with open(full_path, 'r') as script_file:
                     script_content = script_file.read()
                     
-                    # Create execution context with shared tbot instance
-                    exec_globals = {
-                        '__name__': '__main__',
-                        '__builtins__': __builtins__,
-                        'tbot': self.tbot,  # Inject our tbot instance
-                        'Trilobot': lambda: self.tbot,  # Override Trilobot constructor
-                        'time': time,
-                        'RED': (255, 0, 0),
-                        'GREEN': (0, 255, 0),
-                        'BLUE': (0, 0, 255),
-                    }
-                    
-                    # Import trilobot module contents into the execution context
-                    from trilobot import Trilobot as _Trilobot
-                    exec_globals.update({k: v for k, v in globals().items() if not k.startswith('_')})
-                    
-                    exec(script_content, exec_globals)
-                    
+                # Replace Trilobot() calls with reference to existing instance
+                script_content = script_content.replace('tbot = Trilobot()', 'tbot = shared_tbot')
+                
+                # Execute with shared instance
+                exec_globals = {'shared_tbot': self.tbot, '__builtins__': __builtins__}
+                exec(script_content, exec_globals)
+                
             except Exception as e:
                 print(f"Error executing script {full_path}: {e}")
-        else:
-            print(f"Script file {full_path} does not exist. Please check the configuration.")
 
     def flash_buttons(self, num_flashes=1):
         for _ in range(num_flashes):
