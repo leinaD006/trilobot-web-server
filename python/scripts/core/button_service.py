@@ -36,6 +36,9 @@ class ScriptLoader:
         if os.path.exists(full_path):
             try:
                 with open(full_path, 'r') as script_file:
+                    script_content = script_file.read()
+                    
+                    # Create execution context with shared tbot instance
                     exec_globals = {
                         '__name__': '__main__',
                         '__builtins__': __builtins__,
@@ -46,8 +49,13 @@ class ScriptLoader:
                         'GREEN': (0, 255, 0),
                         'BLUE': (0, 0, 255),
                     }
-
-                    exec(script_file.read(), exec_globals)
+                    
+                    # Import trilobot module contents into the execution context
+                    from trilobot import *
+                    exec_globals.update({k: v for k, v in globals().items() if not k.startswith('_')})
+                    
+                    exec(script_content, exec_globals)
+                    
             except Exception as e:
                 print(f"Error executing script {full_path}: {e}")
         else:
