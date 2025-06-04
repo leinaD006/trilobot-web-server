@@ -34,7 +34,10 @@ def get_wifi_ip(interface='wlan0'):
         return f"Interface '{interface}' not found"
     
 sleep(10) # Wait to ensure network interfaces are up
-wifi_ip = get_wifi_ip("eth0")
+wifi_ip = get_wifi_ip("wlan0")
+
+if wifi_ip == "No IP address found for interface":
+    wifi_ip = get_wifi_ip("eth0")
 
 tbot = Trilobot()
 
