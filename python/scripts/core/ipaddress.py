@@ -33,10 +33,15 @@ def get_wifi_ip(interface='wlan0'):
     except ValueError:
         return f"Interface '{interface}' not found"
     
+tbot = Trilobot()
+
+while True:
+    tbot.set_underlights(light_groups["a"], RED)
+    tbot.clear_underlights(light_groups["a"])
+
 sleep(10) # Wait to ensure network interfaces are up
 wifi_ip = get_wifi_ip("eth0")
 
-tbot = Trilobot()
 
 print(f"WiFi IP Address: {wifi_ip}")
 
