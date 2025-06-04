@@ -10,7 +10,7 @@ function scanPythonDirectory($dir, $baseDir = '/var/www/python/scripts')
     }
 
     $iterator = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+        new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::FOLLOW_SYMLINKS),
         RecursiveIteratorIterator::SELF_FIRST
     );
 
