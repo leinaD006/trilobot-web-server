@@ -51,7 +51,7 @@ class ScriptLoader:
                     }
                     
                     # Import trilobot module contents into the execution context
-                    from trilobot import *
+                    from trilobot import Trilobot as _Trilobot
                     exec_globals.update({k: v for k, v in globals().items() if not k.startswith('_')})
                     
                     exec(script_content, exec_globals)
