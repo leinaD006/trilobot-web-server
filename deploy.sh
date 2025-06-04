@@ -6,6 +6,7 @@ WEB_ROOT="/var/www"
 WEB_DIR="$SCRIPT_DIR/web"
 PYTHON_DIR="$SCRIPT_DIR/python"
 LOG_FILE="$SCRIPT_DIR/deploy.log"
+EXCLUDE_FILE="$SCRIPT_DIR/exclude.txt"
 
 # Create log file if it doesn't exist
 touch "$LOG_FILE"
@@ -24,7 +25,7 @@ log_message "Deploying files to web server..."
 
 # Sync files
 rsync -av --delete "$WEB_DIR/" "$WEB_ROOT/html/" 2>&1 | tee -a "$LOG_FILE"
-rsync -av --delete "$PYTHON_DIR/" "$WEB_ROOT/python/" 2>&1 | tee -a "$LOG_FILE"
+rsync -av --delete --exclude-from="$EXCLUDE_FILE" "$PYTHON_DIR/" "$WEB_ROOT/python/" 2>&1 | tee -a "$LOG_FILE"
 
 # Check rsync result
 if [ ${PIPESTATUS[0]} -eq 0 ]; then
