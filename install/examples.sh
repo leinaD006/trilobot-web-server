@@ -8,7 +8,7 @@ if [ ! -d "$EXAMPLE_DIR" ]; then
     mkdir -p "$EXAMPLE_DIR"
 fi
 
-if [ ! -d "$EXAMPLE_DIR" ]; then
+if [ ! -d "$EXAMPLE_DIR/trilobot" ]; then
     mkdir -p "$EXAMPLE_DIR/trilobot"
 fi
 
@@ -21,7 +21,7 @@ cp -r "$INSTALL_DIR/trilobot-python/examples"/* "$EXAMPLE_DIR/trilobot/"
 # Delete the cloned repository
 rm -rf "$INSTALL_DIR/trilobot-python"
 
-if [ ! -d "$EXAMPLE_DIR" ]; then
+if [ ! -d "$EXAMPLE_DIR/bme680" ]; then
     mkdir -p "$EXAMPLE_DIR/bme680"
 fi
 
@@ -29,7 +29,7 @@ git clone https://github.com/pimoroni/bme680-python "$INSTALL_DIR/bme680-python"
 cp -r "$INSTALL_DIR/bme680-python/examples"/* "$EXAMPLE_DIR/bme680/"
 rm -rf "$INSTALL_DIR/bme680-python"
 
-if [ ! -d "$EXAMPLE_DIR" ]; then
+if [ ! -d "$EXAMPLE_DIR/mas301" ]; then
     mkdir -p "$EXAMPLE_DIR/mas301"
 fi
 
