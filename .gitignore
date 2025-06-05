@@ -6,3 +6,4 @@ python/controller_mappings.py
 python/simple_controller.py
 deploy.log
 .vscode
+*.DS_Store
