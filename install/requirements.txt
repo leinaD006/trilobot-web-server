@@ -2,3 +2,5 @@ RPi.GPIO
 trilobot
 netifaces
 bme680
+msa301
+icm20948
