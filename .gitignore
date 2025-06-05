@@ -2,5 +2,7 @@ python/venv
 python/scripts/examples
 python/buttons.conf
 python/trilobot.py
+python/controller_mappings.py
+python/simple_controller.py
 deploy.log
 .vscode
