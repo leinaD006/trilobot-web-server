@@ -8,33 +8,56 @@ if [ ! -d "$EXAMPLE_DIR" ]; then
     mkdir -p "$EXAMPLE_DIR"
 fi
 
-if [ ! -d "$EXAMPLE_DIR/trilobot" ]; then
-    mkdir -p "$EXAMPLE_DIR/trilobot"
-fi
+#!/bin/bash
 
-# Installs example python files for Trilobot
-git clone https://github.com/pimoroni/trilobot-python "$INSTALL_DIR/trilobot-python"
+# List of repositories to install (name:repo-suffix format)
+REPOS=(
+    "trilobot"
+    "bme680" 
+    "msa301"
+    "icm20948"
+)
 
-# Copy example files to the examples directory
-cp -r "$INSTALL_DIR/trilobot-python/examples"/* "$EXAMPLE_DIR/trilobot/"
+# Function to install a single repository
+install_repo() {
+    local name="$1"
+    local repo_suffix="$2"
+    local repo_url="https://github.com/pimoroni/$repo_suffix"
+    local clone_dir="$INSTALL_DIR/$repo_suffix"
+    
+    echo "Installing $name examples..."
+    
+    # Create example directory if it doesn't exist
+    if [ ! -d "$EXAMPLE_DIR/$name" ]; then
+        mkdir -p "$EXAMPLE_DIR/$name"
+    fi
+    
+    # Clone repository
+    if git clone "$repo_url" "$clone_dir"; then
+        # Copy examples (use trap to ensure cleanup on any exit)
+        trap "rm -rf '$clone_dir'" EXIT ERR
+        
+        if cp -r "$clone_dir/examples"/* "$EXAMPLE_DIR/$name/"; then
+            echo "Successfully installed $name examples"
+        else
+            echo "Warning: Failed to copy $name examples"
+        fi
+        
+        # Remove trap and clean up manually for success case
+        trap - EXIT ERR
+        rm -rf "$clone_dir"
+    else
+        echo "Error: Failed to clone $name repository"
+        # Cleanup in case partial clone occurred
+        rm -rf "$clone_dir"
+    fi
+}
 
-# Delete the cloned repository
-rm -rf "$INSTALL_DIR/trilobot-python"
-
-if [ ! -d "$EXAMPLE_DIR/bme680" ]; then
-    mkdir -p "$EXAMPLE_DIR/bme680"
-fi
-
-git clone https://github.com/pimoroni/bme680-python "$INSTALL_DIR/bme680-python"
-cp -r "$INSTALL_DIR/bme680-python/examples"/* "$EXAMPLE_DIR/bme680/"
-rm -rf "$INSTALL_DIR/bme680-python"
-
-if [ ! -d "$EXAMPLE_DIR/msa301" ]; then
-    mkdir -p "$EXAMPLE_DIR/msa301"
-fi
-
-git clone https://github.com/pimoroni/msa301-python "$INSTALL_DIR/msa301-python"
-cp -r "$INSTALL_DIR/msa301-python/examples"/* "$EXAMPLE_DIR/msa301"
-rm -rf "$INSTALL_DIR/msa301-python"
-
-echo "Example files installed successfully in $EXAMPLE_DIR"
+# Main installation loop
+for repo in "${REPOS[@]}"; do
+    # Split name:repo-suffix
+    name="$repo"
+    repo_suffix="$repo-python"
+    
+    install_repo "$name" "$repo_suffix"
+done
