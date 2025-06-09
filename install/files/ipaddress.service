@@ -3,7 +3,7 @@ Description=Run IP Address script on start
 After=network.target
 
 [Service]
-ExecStart=/var/www/python/venv/bin/python /var/www/python/scripts/core/ipaddress.py
+ExecStart=/var/www/python/venv/bin/python /var/www/python/core/ipaddress.py
 WorkingDirectory=/opt/ipaddress
 Restart=on-failure
 
