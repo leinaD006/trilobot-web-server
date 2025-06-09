@@ -18,7 +18,15 @@ sudo apt install phpmyadmin -y
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIA_DB_ROOT_PASSWORD';"
 
 # Remove default index.html
-sudo rm /var/www/html/index.html
+if [ -f /var/www/html/index.html ]; then
+    sudo rm /var/www/html/index.html
+else
+    sleep 5
+    if [ -f /var/www/html/index.html ]; then
+        sudo rm /var/www/html/index.html
+    fi
+fi
+
 
 # Give apache user permission to gpio and i2c
 sudo usermod -a -G gpio www-data
