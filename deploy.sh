@@ -25,7 +25,7 @@ log_message "Deploying files to web server..."
 
 # Sync files
 rsync -av --delete "$WEB_DIR/" "$WEB_ROOT/html/" 2>&1 | tee -a "$LOG_FILE"
-rsync -av --delete --exclude-from="$EXCLUDE_FILE" "$PYTHON_DIR/" "$WEB_ROOT/python/" 2>&1 | tee -a "$LOG_FILE"
+rsync -av  "$PYTHON_DIR/" "$WEB_ROOT/python/" 2>&1 | tee -a "$LOG_FILE"
 
 # Check rsync result
 if [ ${PIPESTATUS[0]} -eq 0 ]; then
