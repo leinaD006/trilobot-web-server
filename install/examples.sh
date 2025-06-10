@@ -61,3 +61,5 @@ for repo in "${REPOS[@]}"; do
     
     install_repo "$name" "$repo_suffix"
 done
+
+cp "$PYTHON_DIR/core/ipaddress.py" "$PYTHON_DIR/scripts/examples/ipaddress.py"
