@@ -37,8 +37,8 @@ fi
 
 # Set appropriate permissions for web files
 log_message "Setting appropriate permissions on web files"
-find "$WEB_ROOT" -mindepth 1 -type f -exec chmod 644 {} \;
-find "$WEB_ROOT" -mindepth 1 -type d -exec chmod 755 {} \;
+find "$WEB_ROOT" -mindepth 1 -type f -exec chmod 777 {} \;
+find "$WEB_ROOT" -mindepth 1 -type d -exec chmod 777 {} \;
 
 log_message "Deployment process completed"
 exit 0

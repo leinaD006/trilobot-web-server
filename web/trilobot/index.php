@@ -46,6 +46,12 @@ function scanPythonDirectory($dir, $baseDir = '/var/www/python/scripts')
 
 $pythonDir = '/var/www/python/scripts';
 $scripts = scanPythonDirectory($pythonDir);
+
+// Make sure processes directory exists
+$processesDir = '/var/www/python/processes';
+if (!is_dir($processesDir)) {
+    mkdir($processesDir, 0755, true);
+}
 ?>
 
 <!DOCTYPE html>
@@ -97,11 +103,13 @@ $scripts = scanPythonDirectory($pythonDir);
         </div>
 
         <div class="output-panel">
-            <h2 class="panel-title">Script Output</h2>
-            <button class="clear-output" onclick="clearOutput()">Clear Output</button>
-            <div id="status-area"></div>
-            <textarea id="output-area" class="output-area" readonly
-                placeholder="Script output will appear here..."></textarea>
+            <h2 class="panel-title">Script Outputs</h2>
+            <div class="output-controls">
+                <button class="clear-output" onclick="clearAllOutputs()">Clear All Outputs</button>
+            </div>
+            <div id="outputs-container" class="outputs-container">
+                <!-- Process outputs will be dynamically added here -->
+            </div>
         </div>
     </div>
 
