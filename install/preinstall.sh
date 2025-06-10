@@ -25,7 +25,14 @@ packages=(
     "python3-venv"
     "python3-dev"
     "python3-libcamera"
-    
+    "libcap-dev"
+    "avformat"
+    "avcodec"
+    "avdevice"
+    "avutil"
+    "avfilter"
+    "swscale"
+    "swresample"
 )
 # Loop through the packages and install them
 for package in "${packages[@]}"; do
