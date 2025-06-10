@@ -7,7 +7,9 @@ if [ ! -d "$PYTHON_DIR" ]; then
 fi
 
 # Set up python environment
-python3 -m venv python/venv
+if [ ! -d "$PYTHON_DIR/venv" ]; then
+    python3 -m venv python/venv
+fi
 
 # Switch to environment
 source python/venv/bin/activate
