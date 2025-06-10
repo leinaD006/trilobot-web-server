@@ -24,6 +24,8 @@ packages=(
     "rsync"
     "python3-venv"
     "python3-dev"
+    "python3-libcamera"
+    
 )
 # Loop through the packages and install them
 for package in "${packages[@]}"; do
