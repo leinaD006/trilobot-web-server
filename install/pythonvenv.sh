@@ -8,7 +8,7 @@ fi
 
 # Set up python environment
 if [ ! -d "$PYTHON_DIR/venv" ]; then
-    python3 -m venv python/venv
+    python -m venv python/venv --system-site-packages
 fi
 
 # Switch to environment
